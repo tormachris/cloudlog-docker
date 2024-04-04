@@ -3,8 +3,9 @@ FROM php:8.2-fpm
 COPY docker-php-entrypoint /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/docker-php-entrypoint && \
-    docker-php-ext-install mysqli xml openssl curl && \
-    docker-php-ext-enable mysqli xml openssl curl
+    apt update && apt install -y libonig5 libxml2 && apt autoclean && \
+    docker-php-ext-install mysqli mbstring xml openssl curl && \
+    docker-php-ext-enable mysqli mbstring xml openssl curl
 
 USER www-data
 
