@@ -3,8 +3,8 @@ FROM php:8.2-fpm
 COPY docker-php-entrypoint /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/docker-php-entrypoint && \
-    docker-php-ext-install -j5 mysqli openssl curl && \
-    docker-php-ext-enable mysqli openssl curl
+    docker-php-ext-install mysqli && \
+    docker-php-ext-enable mysqli
 
 USER www-data
 
