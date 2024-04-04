@@ -3,8 +3,7 @@ FROM php:8.2-fpm
 COPY docker-php-entrypoint /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/docker-php-entrypoint && \
-    docker-php-ext-install mysqli && \
-    docker-php-ext-enable mysqli
+    docker-php-ext-install mysqli
 
 USER www-data
 

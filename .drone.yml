@@ -12,6 +12,7 @@ steps:
     - curl https://api.github.com/repos/magicbug/cloudlog/releases/latest | jq -r '.zipball_url' | xargs -I{} curl -L {} --output cloudlog.zip
     - unzip cloudlog.zip
     - mv $(find . -name 'magicbug-Cloudlog-*' -type d -prune -print) cloudlog
+    - sed -i "s/define('ENVIRONMENT', 'development')/define('ENVIRONMENT', 'production')/" cloudlog/index.php
 
 - name: kaniko
   image: plugins/kaniko

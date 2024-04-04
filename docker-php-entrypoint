@@ -1,7 +1,17 @@
 #!/bin/sh
 set -e
 
-cp -r /var/www/cloudlog/* /var/www/html
+shopt -s extglob
+
+cp -r /var/www/cloudlog/!(backup|updates|uploads|application|images) /var/www/html
+
+mkdir -p /var/www/html/images
+
+cp -r /var/www/cloudlog/images/!(eqsl_card_images) /var/www/html/images
+
+mkdir -p /var/www/html/application
+
+cp -r /var/www/cloudlog/application/!(config|logs) /var/www/html/images
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
