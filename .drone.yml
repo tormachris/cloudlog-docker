@@ -1,0 +1,30 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: donwload_code
+  image: ubuntu
+  pull: always
+  commands:
+    - apt update
+    - apt install -y jq curl unzip
+    - curl https://api.github.com/repos/magicbug/cloudlog/releases/latest | jq -r '.zipball_url' | xargs -I{} curl -L {} --output cloudlog.z
+ip
+    - unzip cloudlog.zip
+    - mv $(find . -name 'magicbug-Cloudlog-*' -type d -prune -print) cloudlog
+
+- name: kaniko
+  image: plugins/kaniko
+  settings:
+    registry: registry.kmlabz.com
+    repo: registry.kmlabz.com/stargate-cluster/${DRONE_REPO_NAME}
+    username:
+      from_secret: DOCKER_USERNAME
+    password:
+      from_secret: DOCKER_PASSWORD
+    context: /drone/src
+    dockerfile: /drone/src/Dockerfile
+    tags:
+      - latest
+      - ${DRONE_BUILD_NUMBER}
