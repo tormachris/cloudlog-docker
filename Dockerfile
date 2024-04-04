@@ -4,8 +4,8 @@ COPY docker-php-entrypoint /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/docker-php-entrypoint && \
     apt update && apt install -y libxml2 && apt autoclean && \
-    docker-php-ext-install mysqli xml openssl curl && \
-    docker-php-ext-enable mysqli xml openssl curl
+    docker-php-ext-install -j5 gd mbstring mysqli xml openssl curl && \
+    docker-php-ext-enable gd mbstring mysqli xml openssl curl
 
 USER www-data
 
